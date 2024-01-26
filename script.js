@@ -1,9 +1,9 @@
 let price = 19.5;
 let cid = [
-  ["PENNY", 1],
-  ["NICKEL", 2],
-  ["DIME", 3],
-  ["QUARTER", 4],
+  ["PENNY", 1.01],
+  ["NICKEL", 2.05],
+  ["DIME", 3.1],
+  ["QUARTER", 4.25],
   ["ONE", 90],
   ["FIVE", 55],
   ["TEN", 20],
@@ -62,6 +62,7 @@ purchaseBtn.addEventListener("click", () => {
     if (!isExactChangePossible(cid_sum, cid_rev, change)) {
       change = tempChange;
       cid_rev = tempCidRev;
+      console.log(cid_rev);
       displayAndUpdateCID(cid_rev.slice().reverse());
       changeDue.textContent = "Status: INSUFFICIENT_FUNDS";
     } else {
@@ -93,7 +94,7 @@ const isExactChangePossible = (cid_sum, cid_rev, change) => {
 
       if (cidObj[cid_rev[i][0]] >= numberOfCurrency) {
         change -= numberOfCurrency * currency_values[cid_rev[i][0]];
-        change = Math.round(change * 100) / 100;
+        change = Number(change.toFixed(2));
         console.log(change);
         cid_rev[i][1] -= numberOfCurrency * currency_values[cid_rev[i][0]];
         result += `${cid_rev[i][0]}: $${
@@ -101,8 +102,8 @@ const isExactChangePossible = (cid_sum, cid_rev, change) => {
         } `;
         
         displayAndUpdateCID(cid_rev.slice().reverse());
-
-        if (change === 0) 
+        
+        if (change == 0) 
           return true;
 
       }
@@ -110,7 +111,7 @@ const isExactChangePossible = (cid_sum, cid_rev, change) => {
         change -= cidObj[cid_rev[i][0]] * currency_values[cid_rev[i][0]];
         console.log(change);
         cid_rev[i][1] -= cidObj[cid_rev[i][0]] * currency_values[cid_rev[i][0]];
-        change = Math.round(change * 100) / 100;
+        change = Number(change.toFixed(2));
         result += `${cid_rev[i][0]}: $${
           cidObj[cid_rev[i][0]] * currency_values[cid_rev[i][0]]
         } `;
